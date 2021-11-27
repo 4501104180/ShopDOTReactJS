@@ -14,22 +14,20 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
     response => response && response.data,
     async error => {
-        const tokens = getToken();
-        if (!tokens) {
-            window.location.href = '/auth/login';
-            return Promise.reject(error);
-        }
         const originalRequest = error.config;
         if (error.response.status === 401 && !originalRequest._retry) {
+            const tokens = getToken();
+            if (!tokens) {
+                window.location.href = '/auth/login';
+                return Promise.reject(error);
+            }
             try {
                 originalRequest._retry = true;
                 const newTokens = await axiosInstance.post('/accounts/refreshToken', {
                     refreshToken: tokens.refreshToken
                 });
-                console.log(newTokens);
                 setToken(newTokens);
                 originalRequest.headers['Authorization'] = `Bearer ${newTokens.accessToken}`;
-                console.log(originalRequest);
                 return axiosInstance(originalRequest);
             } catch (error) {
                 setToken(null);

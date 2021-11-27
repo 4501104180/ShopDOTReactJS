@@ -1,0 +1,7 @@
+1. Download MongoDB Database Tools tại: https://www.mongodb.com/try/download/database-tools
+2. Giải nén sau khi download sau đó vào thư mục bin và mở cmd
+3. Download database.zip tại: https://drive.google.com/file/d/101amBya538prc_Cqx7-us1psLer5ITXb/view?usp=sharing
+4. Giải nén và copy đường dẫn tới folder vừa giải nén.
+3. Gõ lệnh: mongorestore -d <database_name> <directory_backup>
+<database_name> là tên của database
+<directory_backup> là đường dẫn tới folder database vừa copy
